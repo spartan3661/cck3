@@ -1,0 +1,3 @@
+module affected;
+
+Affected::~Affected() {}
