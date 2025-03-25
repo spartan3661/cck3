@@ -10,7 +10,7 @@ export class StatusEffect: public Affected {
         Affected *p;
     
     public:
-        StatusEffect(int d, int s, bool isN);
+        StatusEffect(Affected p, int d, int s, bool isN);
         virtual void applyEffect() = 0;
         virtual void removeEffect() = 0;
         void decrementDuration();
