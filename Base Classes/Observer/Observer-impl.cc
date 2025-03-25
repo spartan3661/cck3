@@ -5,7 +5,7 @@ import subject;
 using namespace std;
 
 
-void Observer::notify(Subject& whoNotified) {}
+void Observer::notify(Subject& whoNotified, string action) {}
 
 string Observer::getName() {}
 

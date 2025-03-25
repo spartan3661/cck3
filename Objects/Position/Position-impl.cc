@@ -11,22 +11,28 @@ ostream& operator<<(ostream& out, const Direction& dir) {
     return out;
 }
 
-Position::Position(int x, int y): x{x}, y{y} {}
+Position::Position(int x, int y, Direction dir): x{x}, y{y}, dir{dir} {}
 
-Position & Position::operator+=(const Position& rhs) {
+Position& Position::operator+=(const Position& rhs) {
     x += rhs.x;
     y += rhs.y;
     return *this;
 }
 
-Position & Position::operator-=(const Position& rhs) {
+Position& Position::operator-=(const Position& rhs) {
     x -= rhs.x;
     y -= rhs.y;
     return *this;
 }
 
+Position& Position::changeDir(const Direction newdir) {
+    dir = newdir;
+    return *this;
+}
+
 int Position::getX() const { return x; }
 int Position::getY() const { return y; }
+Direction Position::getDir() const { return dir; }
 
 std::strong_ordering operator<=>(const Position& lhs, const Position& rhs) {
     auto res_x = lhs.getX() <=> rhs.getX();

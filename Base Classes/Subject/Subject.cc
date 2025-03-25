@@ -7,5 +7,6 @@ export class Subject {
     public:
         void attach(Observer *o);
         void detach(Observer *o);
-        void notifyObservers();
+        void notifyObservers(string action);
+        virtual ~Subject() = 0;
 };

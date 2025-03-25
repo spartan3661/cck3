@@ -5,7 +5,8 @@ export class Entity {
     Position coords;
 
     public:
-        Entity(int x, int y);
+        Entity(Position pos);
         Position getCoords() const;
         virtual ~Entity() = 0;
+        friend LivingEntity;
 };
