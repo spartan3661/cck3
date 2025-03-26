@@ -1,6 +1,7 @@
 export module livingEntity;
 import <vector>;
 import entity;
+import subject_observer;
 import currency;
 import position;
 import passive;
@@ -20,11 +21,12 @@ export enum class Race {
 };
 
 export class LivingEntity: public Entity, public Observer, public Subject {
-    int hp, atk, def;
-    Race race;
-    Currency money;
-    std::vector<Entity*> neighbours;
-    Passive *passive;
+    protected:
+        Race race;
+        int hp, atk, def;
+        Currency money;
+        std::vector<Entity*> neighbours;
+        Passive *passive;
 
     public:
         LivingEntity(Position pos, Race race, int hp, int atk, int def);
@@ -39,5 +41,4 @@ export class LivingEntity: public Entity, public Observer, public Subject {
         // direction to displacement's direction.
         void move(Position displacement);
         virtual void attack() = 0;
-        friend Player;
 };

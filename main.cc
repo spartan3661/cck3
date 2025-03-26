@@ -1,6 +1,10 @@
 import <iostream>;
 import currency;
 import position;
+import subject_observer;
+import livingEntity;
+import player;
+import enemy;
 
 using namespace std;
 

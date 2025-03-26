@@ -1,8 +1,12 @@
 module player;
+import <iostream>;
 import <vector>;
 import <string>;
 import <cmath>;
+import <memory>;
 import item;
+import livingEntity;
+import statusEffect;
 
 using namespace std;
 
@@ -12,7 +16,7 @@ Player::Player(
     int hp = 140,
     int atk = 20,
     int def = 20,
-    Passive passive* = nullptr // new MultiplyScore{1.5}
+    Passive *passive = nullptr // new MultiplyScore{1.5}
 ):
     LivingEntity{pos, race, hp, atk, def}
 {
@@ -33,16 +37,24 @@ void Player::use() {
 
 // Observer Methods
 void Player::notify(Subject& whoNotified, string action) {
-    if (action == "attack") {
-        int dmg = ceil(100/(100 + def) * whoNotified.getAtk());
-        // if dragonsuit, dmg = ceil(dmg/2);
-        this.hp -= dmg;
-    } else if (action == "drop_gold") {
-        this.money += whoNotified.getMoney();
+    try {
+
+        LivingEntity& entity = dynamic_cast<LivingEntity&>(whoNotified);
+
+        if (action == "attack") {
+            int dmg = ceil(100/(100 + def) * entity.getAtk());
+            // if dragonsuit, dmg = ceil(dmg/2);
+            hp -= dmg;
+        } else if (action == "drop_gold") {
+            money += entity.getMoney();
+        }
+        
+    } catch(bad_cast &e) {
+        cerr << e.what() << endl;
     }
 }
 
 string Player::getName() { return "Player"; }
 
 // Subject Methods
-Player::~Subject() {}
+Player::~Player() {}

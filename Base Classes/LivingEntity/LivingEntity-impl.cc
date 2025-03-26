@@ -1,6 +1,7 @@
 module livingEntity;
 import <vector>;
 import entity;
+import subject_observer;
 import currency;
 import position;
 
@@ -13,9 +14,8 @@ LivingEntity::LivingEntity(
     int atk,
     int def
 ): 
-    Entity{pos}, race{race}, hp{hp}, atk{atk}, def{def}
+    Entity{pos}, race{race}, hp{hp}, atk{atk}, def{def}, money{0, 0}
 {
-    money = Currency{0, 0};
     passive = nullptr;
 }
 
@@ -29,7 +29,7 @@ Currency LivingEntity::getMoney() const { return money; }
 
 void LivingEntity::move(Position displacement) {
     coords += displacement;
-    coords.changeDir(displacement.dir);
+    coords.changeDir(displacement.getDir());
 }
 
 void LivingEntity::attack() {}

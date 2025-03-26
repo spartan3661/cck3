@@ -1,6 +1,8 @@
 export module player;
 import <vector>;
 import <string>;
+import livingEntity;
+import statusEffect;
 import position;
 import passive;
 import item;
@@ -18,9 +20,9 @@ export class Player: public LivingEntity {
         void use();
 
         // observer methods
-        void notify(Subject& whoNotified, string action) override; // is called when someone interacts with me.
+        void notify(Subject& whoNotified, std::string action) override; // is called when someone interacts with me.
         std::string getName() override;
 
         // subject methods
-        ~Subject() override;
+        ~Player() override;
 };

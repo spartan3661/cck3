@@ -1,6 +1,13 @@
 module enemy;
 import <vector>;
+import <string>;
+import <cmath>;
+import <iostream>;
+import <memory>;
 import position;
+import livingEntity;
+
+using namespace std;
 
 Enemy::Enemy(
     Position pos,
@@ -8,17 +15,12 @@ Enemy::Enemy(
     int hp,
     int atk,
     int def,
-    bool compasHolder = false,
-    bool isHostile = true
-):
-    LivingEntity{pos, race, hp, atk, def}
-{
-    this.compasHolder = compasHolder;
-    this.isHostile = isHostile;
-}
+    bool compassHolder,
+    bool isHostile
+): LivingEntity{pos, race, hp, atk, def}, compassHolder{compassHolder}, isHostile{isHostile} {}
 
 void Enemy::attack() {
-    if (this.observers.length() > 0) {
+    if (getLength() > 0) {
         notifyObservers("attack");
     }
 }
@@ -30,13 +32,21 @@ void Enemy::onDeath() {
 
 // Observer Methods
 void Enemy::notify(Subject& whoNotified, string action) {
-    if (action == "attack") {
-        int dmg = ceil(100/(100 + def) * whoNotified.getAtk());
-        hp -= dmg;
+    try {
+
+        LivingEntity& entity = dynamic_cast<LivingEntity&>(whoNotified);
+
+        if (action == "attack") {
+            int dmg = ceil(100/(100 + def) * entity.getAtk());
+            // if dragonsuit, dmg = ceil(dmg/2);
+            hp -= dmg;
+        }
+
+    } catch(bad_cast &e) {
+        cerr << e.what() << endl;
     }
 }
 
 string Enemy::getName() { return "Enemy"; }
 
-// Subject Methods
-Enemy::~Subject() {}
+Enemy::~Enemy() {}
