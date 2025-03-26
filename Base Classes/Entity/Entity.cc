@@ -2,10 +2,10 @@ export module entity;
 import position;
 
 export class Entity {
-    Position coords;
-
+    protected:
+        Position coords;
     public:
-        Entity(int x, int y);
+        Entity(Position pos);
         Position getCoords() const;
         virtual ~Entity() = 0;
 };

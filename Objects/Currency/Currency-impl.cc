@@ -13,7 +13,7 @@ Currency& Currency::operator+=(const Currency& rhs) {
     int remainder = temp % 100;
 
     gold += rhs.gold + (temp - remainder) / 100;
-    silver += remainder;
+    silver = remainder;
     
     return *this;
 }
@@ -24,8 +24,8 @@ Currency& Currency::operator-=(const Currency& rhs) {
     return *this;
 }
 
-int Position::getGold() const { return gold; }
-int Position::getSilver() const { return silver; }
+int Currency::getGold() const { return gold; }
+int Currency::getSilver() const { return silver; }
 
 strong_ordering operator<=>(const Currency& lhs, const Currency& rhs) {
     auto res_g = lhs.getGold() <=> rhs.getGold();

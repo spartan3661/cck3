@@ -3,14 +3,15 @@ import affected;
 
 export class StatusEffect: public Affected {
 
-    int duration, strength;
-    bool isNegative;
-
     protected:
         Affected *p;
+
+    private:
+        int duration, strength;
+        bool negative;
     
     public:
-        StatusEffect(int d, int s, bool isN);
+        StatusEffect(Affected *p, int d, int s, bool isN);
         virtual void applyEffect() = 0;
         virtual void removeEffect() = 0;
         void decrementDuration();

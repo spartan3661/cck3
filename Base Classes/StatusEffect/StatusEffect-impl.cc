@@ -4,7 +4,7 @@ import affected;
 using namespace std;
 
 
-StatusEffect::StatusEffect(int d, int s, bool isN): duration{d}, strength{s}, isNegative{isN} {}
+StatusEffect::StatusEffect(Affected *p, int d, int s, bool isN): p{p}, duration{d}, strength{s}, negative{isN} {}
 
 void StatusEffect::applyEffect() {}
 
@@ -12,4 +12,4 @@ void StatusEffect::removeEffect() {}
 
 void StatusEffect::decrementDuration() {}
 
-bool StatusEffect::isNegative() { return isNegative }
+bool StatusEffect::isNegative() const { return negative; }
