@@ -23,13 +23,18 @@ SOURCES = Objects/Currency/Currency.cc \
 		  Objects/Player/Player-impl.cc \
 		  Objects/Enemy/Enemy.cc \
 		  Objects/Enemy/Enemy-impl.cc \
+		  Objects/TextDisplay/TextDisplay.cc \
+		  Objects/TextDisplay/TextDisplay-impl.cc \
+		  Objects/Board/Board.cc \
+		  Objects/Board/Board-impl.cc \
           main.cc
 # list of all .cc files in the current directory
 
-HEADERS = iostream vector compare cmath memory string
+HEADERS = iostream vector compare fstream cmath memory string
 EXEC = submission
 
 $(EXEC): $(SOURCES)
+	rm -rf gcm.cache
 	$(CXX) $(HEADERFLAGS) $(HEADERS)
 	$(CXX) $(CXXFLAGS) $(SOURCES) -o $(EXEC)
 	rm -rf gcm.cache

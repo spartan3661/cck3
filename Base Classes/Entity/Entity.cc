@@ -7,5 +7,7 @@ export class Entity {
     public:
         Entity(Position pos);
         Position getCoords() const;
+
+        void setCoords(Position pos);
         virtual ~Entity() = 0;
 };
