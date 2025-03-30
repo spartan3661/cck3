@@ -8,7 +8,7 @@ import <vector>;
 import <string>;
 import <tuple>;
 
-export class Board{
+export class Board{ 
 
     Player *plr;
 

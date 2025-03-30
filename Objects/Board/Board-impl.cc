@@ -37,7 +37,7 @@ Board::Board(): currentLevel{1}, chambers{5} {
 
 
     itemSample = {
-        //...
+        //........
     
     };
 
