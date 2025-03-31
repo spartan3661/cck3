@@ -35,13 +35,15 @@ int main() {
             b.clearBoard();
             b.display();
         } else if ((command == "h" || command == "e" || command == "d" || command == "o") && hasChosen != true) {
-            Race r = Race::HUMAN;
+            Race r;
             if (command == "e") {
                 r = Race::ELF;
-            }else if (command == "d") {
+            } else if (command == "d") {
                 r = Race::DWARF;
-            }else {
+            } else if (command == "o"){
                 r = Race::ORC;
+            } else {
+                r = Race::HUMAN;
             }
             b.init(r);
         } else if(command == "no" || command == "so" || command == "ea" || command == "we" ||

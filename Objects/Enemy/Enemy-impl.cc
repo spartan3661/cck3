@@ -24,7 +24,7 @@ Enemy::Enemy(
     money = Currency{1, 0};
 }
 
-void Enemy::attack() {
+void Enemy::attack(Direction dir) {
     if (getLength() > 0) {
         notifyObservers("attack");
     }

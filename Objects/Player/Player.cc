@@ -17,7 +17,7 @@ export class Player: public LivingEntity {
     public:
         Player(Position pos, Race race = Race::HUMAN, int hp = 140, int atk = 20, int def = 20, Passive *passive = nullptr); // new MultiplyScore{1.5}
         
-        void attack() override;
+        void attack(Direction dir) override;
         void use();
 
         // getters

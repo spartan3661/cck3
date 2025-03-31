@@ -12,7 +12,7 @@ export class Enemy: public LivingEntity {
     public:
         Enemy(Position pos, Race race, int hp, int atk, int def, Passive *passive, bool compassHolder = false, bool isHostile = true);
         
-        void attack() override;
+        void attack(Direction dir) override;
 
         virtual void onDeath(); // params: Board& b
         void giveCompass();

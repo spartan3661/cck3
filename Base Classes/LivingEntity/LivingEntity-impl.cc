@@ -1,5 +1,6 @@
 module livingEntity;
 import <vector>;
+import <iostream>;
 import entity;
 import subject_observer;
 import currency;
@@ -7,6 +8,12 @@ import position;
 import passive;
 
 using namespace std;
+
+ostream& operator<<(ostream& out, const Race& race) {
+    static const string strValues[] = {"Human", "Elf", "Orc", "Dwarf", "Werewolf", "Vampire", "Goblin", "Merchant", "Dragon", "Phoenix", "Troll"};
+    out << strValues[static_cast<int>(race)];
+    return out;
+}
 
 LivingEntity::LivingEntity(
     Position pos,
@@ -31,9 +38,7 @@ int LivingEntity::getDef() const { return def; }
 
 Currency LivingEntity::getMoney() const { return money; }
 
-Race LivingEntity::getRace(){
-    return race;
-}
+Race LivingEntity::getRace() const { return race; }
 
 void LivingEntity::addMoney(Currency amount) { money += amount; }
 void LivingEntity::subMoney(Currency amount) { money -= amount; }
@@ -55,4 +60,4 @@ void LivingEntity::move(Position displacement) {
     coords.changeDir(displacement.getDir());
 }
 
-void LivingEntity::attack() {}
+void LivingEntity::attack(Direction dir) {}

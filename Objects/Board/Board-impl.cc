@@ -14,6 +14,7 @@ import negatePotion;
 
 import barrierSuit;
 import currency;
+import subject_observer;
 
 import <fstream>;
 import <iostream>;
@@ -22,6 +23,7 @@ import <vector>;
 import <tuple>;
 import <random>;
 import <algorithm>;
+import <memory>;
 import <chrono>;
 
 using namespace std;
@@ -448,6 +450,26 @@ void Board::tick(){
         Position{1, 1, Direction::SE},
     };
 
+    // Attack Player if in range
+    for (auto en : enemies) {
+        // Distance between enemy and player
+        int x1 = static_cast<int>(en->getX());
+        int x2 = static_cast<int>(plr->getX());
+        int y1 = static_cast<int>(en->getY());
+        int y2 = static_cast<int>(plr->getY());
+        int dist = max(abs(x1 - x2), abs(y1 - y2));
+        if (dist <= 1) {
+            try {
+                Observer *o = dynamic_cast<Observer*>(plr);
+                en->attach(o);
+                en->attack(Direction::NO);
+            } catch (bad_cast &e) {
+                cerr << e.what() << endl;
+            }
+        }
+    }
+
+    // Move Enemies
     for (auto en : enemies) {
         shuffle(choices.begin(), choices.end(), rng);
 

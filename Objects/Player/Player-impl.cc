@@ -19,9 +19,12 @@ Player::Player(
     Passive *passive
 ):
     LivingEntity{pos, race, hp, atk, def, passive}, score{0}
-{}
+{
+    effects = nullptr;
+}
 
-void Player::attack() {
+void Player::attack(Direction dir) {
+    
     notifyObservers("attack");
 }
 
@@ -34,11 +37,14 @@ void Player::use() {
 int Player::getHp() const {
     string type = "hp";
     int effect_total = 0;
-    if (effects) { effect_total = effects->getEffect(type); }
+    
+    if (effects != nullptr) { 
+        effect_total = effects->getEffect(type); 
 
-    // check if hp is within range
-    if (effect_total + hp > maxhp) { effect_total = 0; }
-    if (effect_total + hp < 0) { effect_total = -hp; }
+        // check if hp is within range
+        if (effect_total + hp > maxhp) { effect_total = 0; }
+        if (effect_total + hp < 0) { effect_total = -hp; }
+    }
 
     return effect_total + hp;
 }
@@ -46,14 +52,14 @@ int Player::getHp() const {
 int Player::getAtk() const {
     string type = "atk";
     int effect_total = 0;
-    if (effects) { effect_total = effects->getEffect(type); }
+    if (effects != nullptr) { effect_total = effects->getEffect(type); }
     return effect_total + atk;
 }
 
 int Player::getDef() const {
     string type = "def";
     int effect_total = 0;
-    if (effects) { effect_total = effects->getEffect(type); }
+    if (effects != nullptr) { effect_total = effects->getEffect(type); }
     return effect_total + def;
 }
 
@@ -123,6 +129,7 @@ void Player::notify(Subject& whoNotified, string action) {
             int dmg = ceil(100.0f/(100 + def) * entity.getAtk());
             // if dragonsuit, dmg = ceil(dmg/2);
             hp -= dmg;
+            if (hp < 0) { hp = 0 };
         } else if (action == "drop_gold") {
             money += entity.getMoney();
         }

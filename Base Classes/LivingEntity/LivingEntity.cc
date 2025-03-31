@@ -1,5 +1,6 @@
 export module livingEntity;
 import <vector>;
+import <iostream>;
 import entity;
 import subject_observer;
 import currency;
@@ -7,7 +8,7 @@ import position;
 import passive;
 
 export enum class Race {
-    HUMAN,
+    HUMAN = 0,
     ELF,
     ORC,
     DWARF,
@@ -19,6 +20,9 @@ export enum class Race {
     PHOENIX,
     TROLL
 };
+
+// Outputs the string that is equivalent to the enumerated type's value.
+export std::ostream &operator<<(std::ostream& out, const Race& race);
 
 export class LivingEntity: public Entity, public Observer, public Subject {
     protected:
@@ -39,7 +43,7 @@ export class LivingEntity: public Entity, public Observer, public Subject {
         virtual int getDef() const;
 
         Currency getMoney() const;
-        Race getRace();
+        Race getRace() const;
 
         // setter
         void addMoney(Currency amount);
@@ -50,6 +54,6 @@ export class LivingEntity: public Entity, public Observer, public Subject {
         // adds displacement to current position and changes
         // direction to displacement's direction.
         void move(Position displacement);
-        virtual void attack() = 0;
+        virtual void attack(Direction dir) = 0;
         friend class Passive;
 };

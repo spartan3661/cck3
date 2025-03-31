@@ -1,4 +1,5 @@
 module textDisplay;
+import livingEntity;
 import player;
 import <vector>;
 import <string>;
@@ -19,6 +20,11 @@ void TextDisplay::printBoard(const Player* plr, string boardState) const {
         }
         cout << endl;
     }
+    cout << "Race: " << plr->getRace() << " Gold: " << plr->getMoney().getGold() << endl;
+    cout << "HP: " << plr->getHp() << endl;
+    cout << "ATK: " << plr->getAtk() << endl;
+    cout << "DEF: " << plr->getDef() << endl;
+    cout << "Action: " << boardState << endl;
 }
 
 std::ostream& operator<<(std::ostream& os, const TextDisplay& td){
