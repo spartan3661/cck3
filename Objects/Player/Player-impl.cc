@@ -24,12 +24,11 @@ Player::Player(
 }
 
 void Player::attack(Direction dir) {
-    
     notifyObservers("attack");
 }
 
 void Player::use() {
-
+    //
 }
 
 
@@ -129,7 +128,7 @@ void Player::notify(Subject& whoNotified, string action) {
             int dmg = ceil(100.0f/(100 + def) * entity.getAtk());
             // if dragonsuit, dmg = ceil(dmg/2);
             hp -= dmg;
-            if (hp < 0) { hp = 0 };
+            if (hp < 0) { hp = 0; };
         } else if (action == "drop_gold") {
             money += entity.getMoney();
         }

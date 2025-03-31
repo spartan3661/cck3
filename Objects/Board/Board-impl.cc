@@ -11,6 +11,7 @@ import stealing;
 import healthRegen;
 import multiply;
 import negatePotion;
+import livingEntity;
 
 import barrierSuit;
 import currency;
@@ -22,6 +23,7 @@ import <string>;
 import <vector>;
 import <tuple>;
 import <random>;
+import <compare>;
 import <algorithm>;
 import <memory>;
 import <chrono>;
@@ -405,16 +407,53 @@ void Board::movePlayer(Position pos) {
                 break;
             }
         }
-        /*
-        if (iter != v.end()) {
-            Position temp = plr->getCoords();
-            plr->move(pos);
-            cout << plr->getCoords() << endl;
-            v.push_back(make_tuple(temp.getX(), temp.getY()));
-            displayBoard[temp.getX()][temp.getY()] = refBoard[temp.getX()][temp.getY()];
-            displayBoard[plr->getX()][plr->getY()] = '@';
+    }
+}
+
+void Board::playerUse(Position pos) {
+    Position target_pos = plr->getCoords();
+    target_pos += pos;
+    int count = 0;
+    for (auto& item : items) {
+        count++;
+        Position item_pos = item->getCoords();
+        if (item_pos <=> target_pos == strong_ordering::equal) {
+            try {
+                LivingEntity& entity = dynamic_cast<LivingEntity&>(*plr);
+                item->pickupItem(entity);
+                displayBoard[item->getX()][item->getY()] = refBoard[item->getX()][item->getY()];
+                chambers[static_cast<int>(refBoard[item->getX()][item->getY()]) - '0' - 1].push_back(make_tuple(target_pos.getX(), target_pos.getY()));
+                items.erase(items.begin() + count);
+            } catch (bad_cast &e) {
+                cerr << e.what() << endl;
+            }
             break;
-        }*/
+        }
+    }
+}
+
+void Board::playerAttack(Position pos) {
+    Position target_pos = plr->getCoords();
+    target_pos += pos;
+    int count = 0;
+    for (auto& en : enemies) {
+        count++;
+        Position enemy_pos = en->getCoords();
+        if (enemy_pos <=> target_pos == strong_ordering::equal) {
+            try {
+                Observer *o = dynamic_cast<Observer*>(en);
+                plr->attach(o);
+                plr->attack(Direction::NO);
+                if (en->getHp() <= 0) {
+                    displayBoard[en->getX()][en->getY()] = refBoard[en->getX()][en->getY()];
+                    chambers[static_cast<int>(refBoard[en->getX()][en->getY()]) - '0' - 1].push_back(make_tuple(target_pos.getX(), target_pos.getY()));
+                    enemies.erase(enemies.begin() + count);
+                }
+            } catch (bad_cast &e) {
+                cerr << e.what() << endl;
+            }
+            break;
+        }
     }
 }
 
@@ -452,6 +491,7 @@ void Board::tick(){
 
     // Attack Player if in range
     for (auto en : enemies) {
+        if (en->getRace() == Race::DRAGON) { continue; };
         // Distance between enemy and player
         int x1 = static_cast<int>(en->getX());
         int x2 = static_cast<int>(plr->getX());

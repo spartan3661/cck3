@@ -68,31 +68,33 @@ int main() {
             } 
         } else if (command == "u" || command == "a") {
             //Player& ref = b.getPlayer();
-            Direction r;
+            Position p{0, 0, Direction::NO};
             string direction;
             cin >> direction;
             if (direction == "no") {
-                r = Direction::NO;
+                p = Position{-1, 0, Direction::NO};
             } else if (direction == "so") {
-                r = Direction::SO;
+                p = Position{1, 0, Direction::SO};
             } else if (direction == "ea") {
-                r = Direction::EA;
+                p = Position{0, 1, Direction::EA};
             } else if (direction == "we") {
-                r = Direction::WE;
+                p = Position{0, -1, Direction::WE};
             } else if (direction == "ne") {
-                r = Direction::NE;
+                p = Position{-1, 1, Direction::NE};
             } else if (direction == "nw") {
-                r = Direction::NW;
+                p = Position{-1, -1, Direction::NW};
             } else if (direction == "se") {
-                r = Direction::SE;
+                p = Position{-1, 1, Direction::SE};
             } else if (direction == "sw") {
-                r = Direction::SW;
+                p = Position{1, -1, Direction::SW};
             } 
 
             if (command == "u") {
                 //ref.use(r);
-            }else{
+                b.playerUse(p);
+            } else {
                 //ref.attack(r);
+                b.playerAttack(p);
             }
         }
         b.tick();
