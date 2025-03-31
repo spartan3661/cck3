@@ -5,6 +5,8 @@ import subject_observer;
 import livingEntity;
 import player;
 import enemy;
+import merchant;
+import dragon;
 
 import barrierSuit;
 import compass;
@@ -41,9 +43,12 @@ int main() {
 
     Player plr{{0, 0}};
     Enemy enemy{{0, 0}, Race::GOBLIN, 50, 10, 10};
+    Merchant merch{{0, 0}};
 
     plr.attach(&enemy);
     enemy.attach(&plr);
+    merch.attach(&plr);
+    enemy.attach(&merch);
 
     cout << plr.getLength() << endl;
     cout << enemy.getLength() << endl;
@@ -93,6 +98,24 @@ int main() {
     cout << plr.getMoney() << endl;
 
     plr.decrementEffects();
+    cout << "PLAYER STATS:" << endl;
+    cout << plr.getAtk() << endl;
+    cout << plr.getDef() << endl;
+    cout << plr.getMoney() << endl;
+
+    plr.addMoney(Currency{50, 0});
+
+    merch.printShop();
+    merch.purchase(plr, 20);
+    merch.purchase(plr, 0);
+    merch.purchase(plr, 1);
+    merch.purchase(plr, 2);
+
+    cout << "STATS:" << endl;
+    cout << plr.getHp() << endl;
+    cout << enemy.getHp() << endl;
+    cout << plr.getMoney() << endl;
+    
     cout << "PLAYER STATS:" << endl;
     cout << plr.getAtk() << endl;
     cout << plr.getDef() << endl;

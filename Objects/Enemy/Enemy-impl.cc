@@ -35,7 +35,6 @@ void Enemy::onDeath() {
 // Observer Methods
 void Enemy::notify(Subject& whoNotified, string action) {
     try {
-
         LivingEntity& entity = dynamic_cast<LivingEntity&>(whoNotified);
 
         if (action == "attack") {

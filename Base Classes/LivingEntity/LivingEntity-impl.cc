@@ -30,6 +30,7 @@ int LivingEntity::getDef() const { return def; }
 Currency LivingEntity::getMoney() const { return money; }
 
 void LivingEntity::addMoney(Currency amount) { money += amount; }
+void LivingEntity::subMoney(Currency amount) { money -= amount; }
 
 void LivingEntity::move(Position displacement) {
     coords += displacement;
