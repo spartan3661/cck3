@@ -20,6 +20,8 @@ export class Board{
     int maxEnemies;
     int currentLevel;
     bool barrierSuitSpawned;
+    unsigned seed;
+    default_random_engine rng;
     
     std::vector<std::vector<std::tuple<int, int>>> chambers;
     std::vector<int> chamberSample;

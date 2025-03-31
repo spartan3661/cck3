@@ -25,7 +25,7 @@ import <algorithm>;
 
 using namespace std;
 
-Board::Board():  maxEnemies{20}, currentLevel{1} {
+Board::Board(): seed{42}, rng{seed}, maxEnemies{20}, currentLevel{1} {
     
     enemySample = {
         new Enemy{Position{0,0}, Race::WEREWOLF, 50, 25, 25, nullptr, false, true},
@@ -86,8 +86,7 @@ Board::~Board() {
 
 
 void Board::init(Race r){
-    unsigned seed = 42;
-    default_random_engine rng{seed};
+
 
     readLevel();
     
@@ -382,6 +381,25 @@ void Board::spawnItems(default_random_engine& rng){
 }
 
 void Board::tick(){
+    
+    //add to neighbours
+    for(auto en : enemies){
+        for(auto other : enemies){
+
+        }
+    }
+
+    Position choices[] = {
+        Position{0, 1, Direction::NO}, Position{0, -1, Direction::SO}, Position{1, 0, Direction::EA}, Position{-1, 0, Direction::WE}, 
+        Position{-1, 1, Direction::NE}, Position{-1, -1, Direction::NW}, Position{1, 1, Direction::SE}, Position{1, -1, Direction::SW}
+    };
+
+    std::uniform_int_distribution<int> dist(0, 7);
+    Position random_direction = choices[dist(rng)];
+
+    for(auto en : enemies){
+        en.move{random_direction};
+    }
 
 }
 

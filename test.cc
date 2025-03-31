@@ -1,23 +1,7 @@
 import <iostream>;
 import <string>;
-import currency;
 import position;
-import subject_observer;
-import livingEntity;
 import player;
-import enemy;
-import merchant;
-import dragon;
-
-import barrierSuit;
-import compass;
-import goldPile;
-import potion;
-
-import healthEffect;
-import atkEffect;
-import defEffect;
-
 import board;
 import textDisplay;
 
@@ -25,7 +9,8 @@ import textDisplay;
 using namespace std;
 
 int main() {
-
+    Board b;
+    
     string command;
     bool raceChosen = false;
     while (cin >> command) {
@@ -50,28 +35,28 @@ int main() {
                     Player& ref = b.getPlayer();
                     switch(direction){
                         case direction == "no":
-                            ref.move{Position{0, 1, Direction::NO}}
+                            ref.move{Position{0, 1, Direction::NO}};
                             break;
                         case direction == "so":
-                            ref.move{Position{0, -1, Direction::SO}}
+                            ref.move{Position{0, -1, Direction::SO}};
                             break;
                         case direction == "ea":
-                            ref.move{Position{1, 0, Direction::EA}}
+                            ref.move{Position{1, 0, Direction::EA}};
                             break;
                         case direction == "we":
-                            ref.move{Position{-1, 0, Direction::WE}}
+                            ref.move{Position{-1, 0, Direction::WE}};
                             break;
                         case direction == "ne":
-                            ref.move{Position{-1, 1, Direction::NE}}
+                            ref.move{Position{-1, 1, Direction::NE}};
                             break;
                         case direction == "nw":
-                            ref.move{Position{-1, -1, Direction::NW}}
+                            ref.move{Position{-1, -1, Direction::NW}};
                             break;
                         case direction == "se":
-                            ref.move{Position{1, 1, Direction::SE}}
+                            ref.move{Position{1, 1, Direction::SE}};
                             break;
                         case direction == "sw":
-                            ref.move{Position{1, -1, Direction::SW}}
+                            ref.move{Position{1, -1, Direction::SW}};
                             break;
                     }
 
@@ -113,5 +98,6 @@ int main() {
                 ref.attack();
             }
         }
+        b.tick();
     }
 }
