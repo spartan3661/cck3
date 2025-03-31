@@ -54,7 +54,7 @@ SOURCES = Objects/Currency/Currency.cc \
           main.cc
 # list of all .cc files in the current directory
 
-HEADERS = iostream vector compare fstream tuple algorithm random cmath memory string
+HEADERS = iostream vector compare fstream tuple algorithm random cmath memory chrono string
 EXEC = submission
 
 $(EXEC): $(SOURCES)

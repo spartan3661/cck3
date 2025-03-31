@@ -11,7 +11,11 @@ TextDisplay::TextDisplay(std::vector<std::vector<char>>* display) : display{disp
 void TextDisplay::printBoard(const Player* plr, string boardState) const {
     for (const auto& row : *display) {
         for (char c : row) {
-            cout << c;
+            if (isdigit(c)) {
+                cout << '.';
+            } else {
+                cout << c;
+            }
         }
         cout << endl;
     }

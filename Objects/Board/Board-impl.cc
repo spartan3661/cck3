@@ -22,6 +22,7 @@ import <vector>;
 import <tuple>;
 import <random>;
 import <algorithm>;
+import <chrono>;
 
 using namespace std;
 
@@ -86,7 +87,7 @@ Board::~Board() {
 
 
 void Board::init(Race r){
-    unsigned seed = 42;
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
     default_random_engine rng{seed};
 
     readLevel();
@@ -140,6 +141,10 @@ void Board::readLevel(){
         row++;
     }
 }
+
+Player& Board::getPlayer() {
+    return *plr;
+};
 
 void Board::clearBoard(){
     displayBoard.clear();
@@ -381,8 +386,38 @@ void Board::spawnItems(default_random_engine& rng){
     spawnGold(rng);
 }
 
+void Board::movePlayer(Position pos) {
+    Position old_pos = plr->getCoords();
+    Position new_pos = plr->getCoords();
+    new_pos += pos;
+    tuple<int, int> tpl = make_tuple(new_pos.getX(), new_pos.getY());
+    for (auto& v : chambers) {
+        for (auto& col : v) {
+            if (col == tpl) {
+                plr->move(pos);
+                // cout << plr->getCoords() << endl;
+                v.push_back(make_tuple(old_pos.getX(), old_pos.getY()));
+                displayBoard[old_pos.getX()][old_pos.getY()] = refBoard[old_pos.getX()][old_pos.getY()];
+                displayBoard[plr->getX()][plr->getY()] = '@';
+                break;
+            }
+        }
+        /*
+        if (iter != v.end()) {
+            Position temp = plr->getCoords();
+            plr->move(pos);
+            cout << plr->getCoords() << endl;
+            v.push_back(make_tuple(temp.getX(), temp.getY()));
+            displayBoard[temp.getX()][temp.getY()] = refBoard[temp.getX()][temp.getY()];
+            displayBoard[plr->getX()][plr->getY()] = '@';
+            break;
+        }*/
+    }
+}
+
 void Board::tick(){
 
+    display();
 }
 
 void Board::display(){

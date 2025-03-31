@@ -1,5 +1,4 @@
 import <iostream>;
-import <string>;
 import currency;
 import position;
 import subject_observer;
@@ -25,79 +24,10 @@ using namespace std;
 
 int main() {
     Board b;
-    string command;
-    bool hasChosen = false;
-
-    while (cin >> command) {
-        if (command == "q") {
-            break;
-        } else if (command == "r") {
-            b.clearBoard();
-            b.display();
-        } else if ((command == "h" || command == "e" || command == "d" || command == "o") && hasChosen != true) {
-            Race r = Race::HUMAN;
-            if (command == "e") {
-                r = Race::ELF;
-            }else if (command == "d") {
-                r = Race::DWARF;
-            }else {
-                r = Race::ORC;
-            }
-            b.init(r);
-        } else if(command == "no" || command == "so" || command == "ea" || command == "we" ||
-            command == "ne" || command == "nw" || command == "se" || command == "sw") {
-            Player& ref = b.getPlayer();
-            if (command == "no") {
-                b.movePlayer(Position{-1, 0, Direction::NO});
-            } else if (command == "so") {
-                b.movePlayer(Position{1, 0, Direction::SO});
-            } else if (command == "ea") {
-                b.movePlayer(Position{0, 1, Direction::EA});
-            } else if (command == "we") {
-                b.movePlayer(Position{0, -1, Direction::WE});
-            } else if (command == "ne") {
-                b.movePlayer(Position{-1, 1, Direction::NE});
-            } else if (command == "nw") {
-                b.movePlayer(Position{-1, -1, Direction::NW});
-            } else if (command == "se") {
-                b.movePlayer(Position{1, 1, Direction::SE});
-            } else if (command == "sw") {
-                ref.move(Position{1, -1, Direction::SW});
-            } 
-        } else if (command == "u" || command == "a") {
-            //Player& ref = b.getPlayer();
-            Direction r;
-            string direction;
-            cin >> direction;
-            if (direction == "no") {
-                r = Direction::NO;
-            } else if (direction == "so") {
-                r = Direction::SO;
-            } else if (direction == "ea") {
-                r = Direction::EA;
-            } else if (direction == "we") {
-                r = Direction::WE;
-            } else if (direction == "ne") {
-                r = Direction::NE;
-            } else if (direction == "nw") {
-                r = Direction::NW;
-            } else if (direction == "se") {
-                r = Direction::SE;
-            } else if (direction == "sw") {
-                r = Direction::SW;
-            } 
-
-            if (command == "u") {
-                //ref.use(r);
-            }else{
-                //ref.attack(r);
-            }
-        }
-        b.tick();
-    }
+    b.init(Race::HUMAN);
+    b.display();
 
     // TEST CURRENCY AND POSITION
-    
     /*
     Currency c{5, 20};
     Position p{10, 10, Direction::NO};
@@ -118,7 +48,7 @@ int main() {
     // TEST PLAYER AND ENEMY
 
     Player plr{{0, 0}};
-    Enemy enemy{{0, 0}, Race::GOBLIN, 50, 10, 10, nullptr};
+    Enemy enemy{{0, 0}, Race::GOBLIN, 50, 10, 10};
     Merchant merch{{0, 0}};
 
     plr.attach(&enemy);

@@ -47,7 +47,9 @@ export class Board{
         //~Board();
         void init(Race r);
         void clearBoard();
+        Player& getPlayer();
         int spawnPlayer(std::default_random_engine& rng, Race r);
+        void movePlayer(Position pos);
         void spawnStairs(std::default_random_engine& rng, int playerIndex);
         void spawnEnemies(std::default_random_engine& rng);
         void spawnItems(std::default_random_engine& rng);
