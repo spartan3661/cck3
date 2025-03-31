@@ -32,11 +32,16 @@ export class LivingEntity: public Entity, public Observer, public Subject {
     public:
         LivingEntity(Position pos, Race race, int hp, int atk, int def);
 
-        int getHp() const;
-        int getAtk() const;
-        int getDef() const;
+        // getters
+        int getMaxHp() const;
+        virtual int getHp() const;
+        virtual int getAtk() const;
+        virtual int getDef() const;
 
         Currency getMoney() const;
+
+        // setter
+        void addMoney(Currency amount);
 
         // adds displacement to current position and changes
         // direction to displacement's direction.

@@ -1,50 +1,39 @@
-export module livingEntity;
+module livingEntity;
 import <vector>;
 import entity;
 import subject_observer;
 import currency;
 import position;
-import passive;
 
-export enum class Race {
-    HUMAN,
-    ELF,
-    ORC,
-    DWARF,
-    WEREWOLF,
-    VAMPIRE,
-    GOBLIN,
-    MERCHANT,
-    DRAGON,
-    PHOENIX,
-    TROLL
-};
+using namespace std;
 
-export class LivingEntity: public Entity, public Observer, public Subject {
-    protected:
-        Race race;
-        const int maxhp;
-        int hp, atk, def;
-        Currency money;
-        std::vector<Entity*> neighbours;
-        Passive *passive;
+LivingEntity::LivingEntity(
+    Position pos,
+    Race race,
+    int hp,
+    int atk,
+    int def
+): 
+    Entity{pos}, race{race}, maxhp{hp}, hp{hp}, atk{atk}, def{def}, money{0, 0}
+{
+    passive = nullptr;
+}
 
-    public:
-        LivingEntity(Position pos, Race race, int hp, int atk, int def);
+int LivingEntity::getMaxHp() const { return maxhp; }
 
-        // getters
-        int getMaxHp() const;
-        virtual int getHp() const;
-        virtual int getAtk() const;
-        virtual int getDef() const;
+int LivingEntity::getHp() const { return hp; }
 
-        Currency getMoney() const;
+int LivingEntity::getAtk() const { return atk; }
 
-        // setter
-        void addMoney(Currency amount);
+int LivingEntity::getDef() const { return def; }
 
-        // adds displacement to current position and changes
-        // direction to displacement's direction.
-        void move(Position displacement);
-        virtual void attack() = 0;
-};
+Currency LivingEntity::getMoney() const { return money; }
+
+void LivingEntity::addMoney(Currency amount) { money += amount; }
+
+void LivingEntity::move(Position displacement) {
+    coords += displacement;
+    coords.changeDir(displacement.getDir());
+}
+
+void LivingEntity::attack() {}

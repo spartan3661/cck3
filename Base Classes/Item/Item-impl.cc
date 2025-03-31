@@ -5,6 +5,8 @@ import livingEntity;
 
 using namespace std;
 
+Item::Item(string name, bool pickupable): name{name}, pickupable{pickupable} {}
+
 string Item::getName() const { return name; }
 
 bool Item::canPickup() const { return pickupable; }
