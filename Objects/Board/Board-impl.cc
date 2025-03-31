@@ -27,6 +27,9 @@ import <chrono>;
 using namespace std;
 
 Board::Board():  maxEnemies{20}, currentLevel{1} {
+
+    seed = std::chrono::system_clock::now().time_since_epoch().count();
+    rng = default_random_engine{seed};
     
     enemySample = {
         new Enemy{Position{0,0}, Race::WEREWOLF, 50, 25, 25, nullptr, false, true},
@@ -87,8 +90,6 @@ Board::~Board() {
 
 
 void Board::init(Race r){
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    default_random_engine rng{seed};
 
     readLevel();
     
@@ -415,8 +416,48 @@ void Board::movePlayer(Position pos) {
     }
 }
 
-void Board::tick(){
+bool Board::moveEnemy(Position pos, Enemy* en, char c) {
+    Position old_pos = en->getCoords();
+    Position new_pos = en->getCoords();
+    new_pos += pos;
+    tuple<int, int> tpl = make_tuple(new_pos.getX(), new_pos.getY());
+    for (auto& v : chambers) {
+        for (auto& col : v) {
+            if (col == tpl) {
+                en->move(pos);
+                // cout << plr->getCoords() << endl;
+                v.push_back(make_tuple(old_pos.getX(), old_pos.getY()));
+                displayBoard[old_pos.getX()][old_pos.getY()] = refBoard[old_pos.getX()][old_pos.getY()];
+                displayBoard[en->getX()][en->getY()] = c;
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
+void Board::tick(){
+    vector<Position> choices = {
+        Position{1, 0, Direction::SO},
+        Position{0, 1, Direction::EA},
+        Position{0, -1, Direction::WE},
+        Position{-1, 1, Direction::NE},
+        Position{-1, -1, Direction::NW},
+        Position{1, -1, Direction::SW},
+        Position{-1, 0, Direction::NO},
+        Position{1, 1, Direction::SE},
+    };
+
+    for (auto en : enemies) {
+        shuffle(choices.begin(), choices.end(), rng);
+
+        for (auto pos : choices) {
+            if (moveEnemy(pos, en, displayBoard[en->getX()][en->getY()])) {
+                break;
+            }
+        }
+
+    }
     display();
 }
 

@@ -16,6 +16,9 @@ export class Board{
 
     Player *plr;
 
+    unsigned seed;
+    std::default_random_engine rng;
+
     int numChambers;
     int maxEnemies;
     int currentLevel;
@@ -50,6 +53,7 @@ export class Board{
         Player& getPlayer();
         int spawnPlayer(std::default_random_engine& rng, Race r);
         void movePlayer(Position pos);
+        bool moveEnemy(Position pos, Enemy* en, char c);
         void spawnStairs(std::default_random_engine& rng, int playerIndex);
         void spawnEnemies(std::default_random_engine& rng);
         void spawnItems(std::default_random_engine& rng);
