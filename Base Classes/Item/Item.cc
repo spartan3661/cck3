@@ -1,13 +1,15 @@
 export module item;
 import <string>;
+import entity;
+import position;
 import livingEntity;
 //import board;
 
-export class Item {
+export class Item : public Entity {
     std::string name;
     bool pickupable;
     public:
-        Item(std::string name, bool pickupable = true);
+        Item(Position pos, std::string name, bool pickupable = true);
         std::string getName() const;
         bool canPickup() const;
         void pickupItem(LivingEntity& to, bool useOnPickup); // params: Player *plr, Board& b

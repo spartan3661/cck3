@@ -8,6 +8,6 @@ export class Entity {
         Entity(Position pos);
         Position getCoords() const;
 
-        void setCoords(Position pos);
+        virtual void setCoords(Position pos);
         virtual ~Entity() = 0;
 };

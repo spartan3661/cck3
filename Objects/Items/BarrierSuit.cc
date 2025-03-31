@@ -1,9 +1,10 @@
 export module barrierSuit;
 import <string>;
+import position;
 import item;
 
 export class BarrierSuit : public Item {
     public:
-        BarrierSuit(std::string name);
+        BarrierSuit(Position pos, std::string name);
         ~BarrierSuit() override;
 };

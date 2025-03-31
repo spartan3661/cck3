@@ -1,11 +1,12 @@
 module item;
 import <string>;
+import position;
 import livingEntity;
 //import board;
 
 using namespace std;
 
-Item::Item(string name, bool pickupable): name{name}, pickupable{pickupable} {}
+Item::Item(Position pos, string name, bool pickupable): Entity{pos}, name{name}, pickupable{pickupable} {}
 
 string Item::getName() const { return name; }
 

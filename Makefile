@@ -35,10 +35,14 @@ SOURCES = Objects/Currency/Currency.cc \
 		  Objects/PotionEffects/AtkEffect-impl.cc \
 		  Objects/PotionEffects/DefEffect.cc \
 		  Objects/PotionEffects/DefEffect-impl.cc \
+		  Objects/TextDisplay/TextDisplay.cc \
+		  Objects/TextDisplay/TextDisplay-impl.cc \
+		  Objects/Board/Board.cc \
+		  Objects/Board/Board-impl.cc \
           main.cc
 # list of all .cc files in the current directory
 
-HEADERS = iostream vector compare fstream cmath memory string
+HEADERS = iostream vector compare fstream tuple algorithm random cmath memory string
 EXEC = submission
 
 $(EXEC): $(SOURCES)

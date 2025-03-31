@@ -3,11 +3,12 @@ import <string>;
 import item;
 import player;
 import currency;
+import position;
 
 using namespace std;
 
 
-GoldPile::GoldPile(string name, Currency value): Item{name}, value{value} {}
+GoldPile::GoldPile(Position pos, string name, Currency value): Item{pos, name}, value{value} {}
 
 void GoldPile::useItem() {};  
 

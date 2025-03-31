@@ -2,10 +2,10 @@ module potion;
 import <string>;
 import player;
 import statusEffect;
-
+import position;
 using namespace std;
 
-Potion::Potion(string name, int strength, StatusEffect *effect): Item{name}, strength{strength}, effect{effect} {}
+Potion::Potion(Position pos, string name, int strength, StatusEffect *effect): Item{pos, name}, strength{strength}, effect{effect} {}
 
 void Potion::useItem() {};
 

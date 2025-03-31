@@ -29,6 +29,10 @@ int LivingEntity::getDef() const { return def; }
 
 Currency LivingEntity::getMoney() const { return money; }
 
+Race LivingEntity::getRace(){
+    return race;
+}
+
 void LivingEntity::addMoney(Currency amount) { money += amount; }
 
 void LivingEntity::move(Position displacement) {

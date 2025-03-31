@@ -39,6 +39,7 @@ export class LivingEntity: public Entity, public Observer, public Subject {
         virtual int getDef() const;
 
         Currency getMoney() const;
+        Race getRace();
 
         // setter
         void addMoney(Currency amount);

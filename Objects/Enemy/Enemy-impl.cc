@@ -54,7 +54,12 @@ void Enemy::notify(Subject& whoNotified, string action) {
         cerr << e.what() << endl;
     }
 }
-
+bool Enemy::getCompassHolder() const {
+    return compassHolder;
+}
+bool Enemy::getIsHostile() const {
+    return isHostile;
+}
 string Enemy::getName() { return "Enemy"; }
 
 Enemy::~Enemy() {}

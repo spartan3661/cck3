@@ -18,5 +18,8 @@ export class Enemy: public LivingEntity {
         void notify(Subject& whoNotified, std::string action) override; // is called when someone interacts with me.
         std::string getName() override;
 
+        bool getCompassHolder() const;
+        bool getIsHostile() const;
+
         ~Enemy() override;
 };
