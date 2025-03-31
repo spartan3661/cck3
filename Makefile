@@ -13,8 +13,6 @@ SOURCES = Objects/Currency/Currency.cc \
 		  Base\ Classes/Entity/Entity-impl.cc \
 		  Base\ Classes/LivingEntity/LivingEntity.cc \
 		  Base\ Classes/LivingEntity/LivingEntity-impl.cc \
-		  Base\ Classes/Affected/Affected.cc \
-		  Base\ Classes/Affected/Affected-impl.cc \
 		  Base\ Classes/StatusEffect/StatusEffect.cc \
 		  Base\ Classes/StatusEffect/StatusEffect-impl.cc \
 		  Base\ Classes/Item/Item.cc \
@@ -23,6 +21,20 @@ SOURCES = Objects/Currency/Currency.cc \
 		  Objects/Player/Player-impl.cc \
 		  Objects/Enemy/Enemy.cc \
 		  Objects/Enemy/Enemy-impl.cc \
+		  Objects/Items/BarrierSuit.cc \
+		  Objects/Items/BarrierSuit-impl.cc \
+		  Objects/Items/Compass.cc \
+		  Objects/Items/Compass-impl.cc \
+		  Objects/Items/GoldPile.cc \
+		  Objects/Items/GoldPile-impl.cc \
+		  Objects/Items/Potion.cc \
+		  Objects/Items/Potion-impl.cc \
+		  Objects/PotionEffects/HealthEffect.cc \
+		  Objects/PotionEffects/HealthEffect-impl.cc \
+		  Objects/PotionEffects/AtkEffect.cc \
+		  Objects/PotionEffects/AtkEffect-impl.cc \
+		  Objects/PotionEffects/DefEffect.cc \
+		  Objects/PotionEffects/DefEffect-impl.cc \
           main.cc
 # list of all .cc files in the current directory
 

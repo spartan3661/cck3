@@ -14,10 +14,12 @@ LivingEntity::LivingEntity(
     int atk,
     int def
 ): 
-    Entity{pos}, race{race}, hp{hp}, atk{atk}, def{def}, money{0, 0}
+    Entity{pos}, race{race}, maxhp{hp}, hp{hp}, atk{atk}, def{def}, money{0, 0}
 {
     passive = nullptr;
 }
+
+int LivingEntity::getMaxHp() const { return maxhp; }
 
 int LivingEntity::getHp() const { return hp; }
 
@@ -26,6 +28,8 @@ int LivingEntity::getAtk() const { return atk; }
 int LivingEntity::getDef() const { return def; }
 
 Currency LivingEntity::getMoney() const { return money; }
+
+void LivingEntity::addMoney(Currency amount) { money += amount; }
 
 void LivingEntity::move(Position displacement) {
     coords += displacement;

@@ -5,6 +5,7 @@ import <cmath>;
 import <iostream>;
 import <memory>;
 import position;
+import currency;
 import livingEntity;
 
 using namespace std;
@@ -17,7 +18,9 @@ Enemy::Enemy(
     int def,
     bool compassHolder,
     bool isHostile
-): LivingEntity{pos, race, hp, atk, def}, compassHolder{compassHolder}, isHostile{isHostile} {}
+): LivingEntity{pos, race, hp, atk, def}, compassHolder{compassHolder}, isHostile{isHostile} {
+    money = Currency{1, 0};
+}
 
 void Enemy::attack() {
     if (getLength() > 0) {
@@ -29,7 +32,6 @@ void Enemy::onDeath() {
     notifyObservers("drop_gold");
 }
 
-
 // Observer Methods
 void Enemy::notify(Subject& whoNotified, string action) {
     try {
@@ -37,9 +39,13 @@ void Enemy::notify(Subject& whoNotified, string action) {
         LivingEntity& entity = dynamic_cast<LivingEntity&>(whoNotified);
 
         if (action == "attack") {
-            int dmg = ceil(100/(100 + def) * entity.getAtk());
+            int dmg = ceil(100.0f/(100 + def) * entity.getAtk());
             // if dragonsuit, dmg = ceil(dmg/2);
             hp -= dmg;
+            if (hp <= 0) {
+                hp = 0;
+                onDeath();
+            }
         }
 
     } catch(bad_cast &e) {

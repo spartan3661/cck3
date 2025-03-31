@@ -1,19 +1,23 @@
 export module statusEffect;
-import affected;
+import <string>;
 
-export class StatusEffect: public Affected {
+export class StatusEffect {
 
     protected:
-        Affected *p;
-
-    private:
-        int duration, strength;
         bool negative;
+        StatusEffect *p;
+        int duration, strength;
     
     public:
-        StatusEffect(Affected *p, int d, int s, bool isN);
-        virtual void applyEffect() = 0;
-        virtual void removeEffect() = 0;
+        StatusEffect(bool isN, StatusEffect *p, int d, int s);
         void decrementDuration();
+
+        // getters
+        virtual int getEffect(std::string& type) const = 0;
         bool isNegative() const;
+        StatusEffect* getNext() const;
+        int getDuration() const;
+        
+        // setter
+        void setNext(StatusEffect *new_p);
 };
