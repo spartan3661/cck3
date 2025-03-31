@@ -25,6 +25,8 @@ export class Player: public LivingEntity {
         int getDef() const override;
 
         void addEffect(StatusEffect *effect);
+        void equipItem(Item* item);
+        void equipArmour(Item* item);
         void decrementEffects();
 
         // observer methods

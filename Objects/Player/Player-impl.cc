@@ -65,6 +65,14 @@ void Player::addEffect(StatusEffect *effect) {
     }
 }
 
+void Player::equipItem(Item* item) {
+    inventory.emplace_back(item);
+}
+
+void Player::equipArmour(Item* item) {
+    armour.emplace_back(item);
+}
+
 void Player::decrementEffects() {
     // decrement effects
     if (effects) {
