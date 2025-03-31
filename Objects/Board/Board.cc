@@ -4,6 +4,8 @@ import item;
 import enemy;
 import textDisplay;
 import position;
+import potion;
+import GoldPile;
 import <vector>;
 import <string>;
 import <tuple>;
@@ -13,6 +15,8 @@ export class Board{
     Player *plr;
 
     int numChambers;
+    int maxEnemies;
+    bool barrierSuitSpawned;
     
     std::vector<std::vector<char>> chambers;
     std::vector<int> chamberSample;
@@ -21,8 +25,10 @@ export class Board{
     std::vector<Enemy*> enemySample;
     std::vector<Enemy*> enemies;
 
-    std::vector<int> itemDistribution;  //item spawnrates
-    std::vector<Item*> itemSample;      //sampling items for spawn
+    std::vector<Potion*> potionSample;
+    std::vector<int> goldDistribution;
+    std::vector<GoldPile*> goldSample;
+
     std::vector<Item*> items;           //holds actual items
 
     std::vector<std::vector<char>> refBoard;
@@ -38,8 +44,9 @@ export class Board{
         void clearBoard();
         int spawnPlayer(std::default_random_engine& rng, Race r);
         void spawnStairs(std::default_random_engine& rng);
-        void spawnEnemeis(std::default_random_engine& rng);
-        void spawnItems(Position pos);
+        void spawnEnemies(std::default_random_engine& rng);
+        void spawnPotionsAndGold(std::default_random_engine& rng);
+        void spawn
         void tick();
         void display();
 

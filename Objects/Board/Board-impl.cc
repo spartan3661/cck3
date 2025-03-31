@@ -5,6 +5,7 @@ import enemy;
 import textDisplay;
 import Position;
 import passive;
+import barrierSuit;
 
 import <fstream>;
 import <iostream>;
@@ -15,7 +16,7 @@ import <random>;
 
 using namespace std;
 
-Board::Board(): currentLevel{1}, chambers{5} {
+Board::Board(): currentLevel{1}, maxEnemies{20} {
     
     for (int i = 0; i < numChambers; i++){
         chamberSample[i] = i;
@@ -36,9 +37,24 @@ Board::Board(): currentLevel{1}, chambers{5} {
                          5, 5};
 
 
-    itemSample = {
-        //........
-    
+    potionSample = {
+        Potion{"Restore Health", 5, nullptr},
+        Potion{"Poison Health", 5, nullptr},
+        Potion{"Boost Attack", 5, nullptr},
+        Potion{"Boost Def", 5, nullptr};
+        Potion{"Wound Attack", 5, nullptr},
+        Potion{"Wound Def", 5, nullptr};
+    };
+
+    goldSample = {
+        GoldPile{"normal", 1},
+        GoldPile{"small hoard", 2},
+        GoldPile{"dragon hoard", 4}
+    };
+
+    goldDistribution = {0, 0, 0, 0, 0,
+                        1, 1,
+                        2
     };
 
     
@@ -47,20 +63,24 @@ Board::Board(): currentLevel{1}, chambers{5} {
 
 
 void Board::init(Race r){
-    
-    readLevel();
+    unsigned seed = 42;
+    std::default_random_engine rng{seed};
+
+
+    readLevel(rng);
     
     td = TextDisplay{refBoard};
 
-    unsigned seed = 42;
-    std::default_random_engine rng{seed};
 
     //spawn player
 
     int playerIndex = spawnPlayer(rng, r);
 
     //spawn staircase
-    spawnStairs(std::default_random_engine& rng, playerIndex)
+    spawnStairs(rng, playerIndex)
+
+    spawnPotionsAndGold(rng);
+
     //spawn enemies
     spawnEnemies(rng);
 }
@@ -73,14 +93,10 @@ void Board::clearBoard(){
 }
 
 int Board::spawnPlayer(std::default_random_engine& rng, Race r){
-    for ( int i = 0; i < 10; i++ ) {
-		std::shuffle( chamberSample.begin(), chamberSample.end(), rng );
+
+	std::shuffle( chamberSample.begin(), chamberSample.end(), rng );
+	std::shuffle( chambers[chamberSample[0]].begin(), chambers[chamberSample[0]].end(), rng );
         
-	}
-    for ( int i = 0; i < 10; i++ ) {
-		std::shuffle( chambers[chamberSample[0]].begin(), chambers[chamberSample[0]].end(), rng );
-        
-	}
     
     Position entityPos{chambers[chamberSample[0]][0], chambers[chamberSample[0]][1]};
 
@@ -92,15 +108,13 @@ int Board::spawnPlayer(std::default_random_engine& rng, Race r){
 
 void Board::spawnStairs(std::default_random_engine& rng, int playerIndex){
     while(chamberSample[0] != playerIndex) {
-        for ( int i = 0; i < 10; i++ ) {
-            std::shuffle( chamberSample.begin(), chamberSample.end(), rng );
-        }
+        std::shuffle( chamberSample.begin(), chamberSample.end(), rng );
     }
 
-    for ( int i = 0; i < 10; i++ ) {
-		std::shuffle( chambers[chamberSample[0]].begin(), chambers[chamberSample[0]].end(), rng );
+
+	std::shuffle( chambers[chamberSample[0]].begin(), chambers[chamberSample[0]].end(), rng );
         
-	}
+
 
     Position entityPos{chambers[chamberSample[0]][0], chambers[chamberSample[0]][1]};
 
@@ -110,47 +124,147 @@ void Board::spawnStairs(std::default_random_engine& rng, int playerIndex){
 }
 
 void Board::spawnEnemies(std::default_random_engine& rng){
-    for ( int i = 0; i < 20; i++ ) {
-        for ( int i = 0; i < 10; i++ ) {
-            std::shuffle( chamberSample.begin(), chamberSample.end(), rng );
-            
-        }
-        for ( int i = 0; i < 10; i++ ) {
-            std::shuffle( chambers[chamberSample[0]].begin(), chambers[chamberSample[0]].end(), rng );
-            std::shuffle( enemySample.begin(), enemySample.end(), rng );
-            std::shuffle( enemyDistribution.begin(), enemyDistribution.end(), rng );
-        }
+    for ( int i = 0; i < maxEnemies; i++ ) {
+
+        std::shuffle( chamberSample.begin(), chamberSample.end(), rng );
+        std::shuffle( chambers[chamberSample[0]].begin(), chambers[chamberSample[0]].end(), rng );
+        std::shuffle( enemyDistribution.begin(), enemyDistribution.end(), rng );
+        
 
         Position entityPos{chambers[chamberSample[0]][0], chambers[chamberSample[0]][1]};
-
-        Enemy tempEnemy = enemy{enemyDistribution[0]};
+        if(i == 1){
+            Enemy tempEnemy = enemy{enemySample[enemyDistribution[0]]};
+            tempEnemy.giveCompass();
+        } else{
+            Enemy tempEnemy = enemy{enemySample[enemyDistribution[0]]};
+        }
+        
         tempEnemy.setCoords{entityPos};
         enemies.emplace_back(tempEnemy)
         chambers[chamberSample[0]][0].erase(chambers.start());
 
 	}
 }
-void Board::spawnItems(std::default_random_engine& rng){
-    for ( int i = 0; i < 20; i++ ) {
-        for ( int i = 0; i < 10; i++ ) {
-            std::shuffle( chamberSample.begin(), chamberSample.end(), rng );
-            
+
+void Board::spawnPotionGoldSuit(std::default_random_engine& rng){
+    if(!barrierSuitSpawned){
+        std::bernoulli_distribution dist(0.5);
+        bool spawn = dist(rng);
+        if (spawn){
+            Position entityPos{0, 0};
+
+            if(goldSample[goldDistribution[0]].getName() == "dragon hoard"){
+                vector<tuple> randomDragonPos = {make_tuple<1, 1>,
+                    make_tuple<1, -1>,
+                    make_tuple<-1, 1>,
+                    make_tuple<-1, -1>,
+                    make_tuple<0, 1>,
+                    make_tuple<0, -1>,
+                    make_tuple<-1, 0>,
+                    make_tuple<0, -1>
+                }
+    
+                do{
+                    for ( int i = 0; i < 10; i++ ) {
+                        std::shuffle( chambers[chamberSample[0]].begin(), chambers[chamberSample[0]].end(), rng);
+                        std::shuffle( chamberSample.begin(), chamberSample.end(), rng );
+                    }
+    
+                    entityPos{chambers[chamberSample[0]][0], chambers[chamberSample[0]][1]};
+    
+                    for(auto posMod : randomDragonPos){
+                        dragonPosition = make_tuple<entityPos.getX() + posMod[0][0], 
+                                                    entityPos.getY() + posMod[0][1]>;
+                        if(find(chambers[chamberSample[0]].begin(), chambers[chamberSample[0]].end(), dragonPosition) != chambers[chamberSample[0]].end()){
+                            newDragonPos.push_back(dragonPosition);
+                        }
+                    }
+                } while {!newDragonPos.empty()};
+            }
+    
+            Item tempSuit = Item{BarrierSuit{"suit"}};
+            tempSuit.setCoords{entityPos};
+    
+            std::shuffle(newDragonPos.begin(), newDragonPos.end(), rng);
+            enemies.emplace_back(Enemy{Position{newDragonPos[0][0], newDragonPos[0][1]}, Race::Dragon, 150, 20, 20});
+    
+            maxEnemies--;
+    
+            items.emplace_back(tempSuit)
+            chambers[chamberSample[0]][0].erase(chambers.start());
         }
-        for ( int i = 0; i < 10; i++ ) {
-            std::shuffle( chambers[chamberSample[0]].begin(), chambers[chamberSample[0]].end(), rng );
-            std::shuffle( item.begin(), item.end(), rng );
-            std::shuffle( itemDistribution.begin(), itemDistribution.end(), rng );
-        }
+
+    }
+
+
+    for ( int i = 0; i < 10; i++ ) {
+
+        std::shuffle( chamberSample.begin(), chamberSample.end(), rng );
+        std::shuffle( chambers[chamberSample[0]].begin(), chambers[chamberSample[0]].end(), rng );
+        std::shuffle( potionSample.begin(), potionSample.end(), rng );
 
         Position entityPos{chambers[chamberSample[0]][0], chambers[chamberSample[0]][1]};
 
-        Item tempItem = Item{enemyDistribution[0]};
-        tempItem.setCoords{entityPos};
-        items.emplace_back(tempEnemy)
+        Item tempPotion = Item{potionSample[0]};
+        tempPotion.setCoords{entityPos};
+        items.emplace_back(tempPotion)
         chambers[chamberSample[0]][0].erase(chambers.start());
 
 	}
+
+    vector<tuple> newDragonPos;
+
+    for ( int i = 0; i < 10; i++ ) {
+
+        std::shuffle( goldDistribution.begin(), goldDistribution.end(), rng );
+
+
+        Position entityPos{0, 0};
+
+        if(goldSample[goldDistribution[0]].getName() == "dragon hoard"){
+            vector<tuple> randomDragonPos = {make_tuple<1, 1>,
+                make_tuple<1, -1>,
+                make_tuple<-1, 1>,
+                make_tuple<-1, -1>,
+                make_tuple<0, 1>,
+                make_tuple<0, -1>,
+                make_tuple<-1, 0>,
+                make_tuple<0, -1>
+            }
+
+            do{
+                for ( int i = 0; i < 10; i++ ) {
+                    std::shuffle( chambers[chamberSample[0]].begin(), chambers[chamberSample[0]].end(), rng);
+                    std::shuffle( chamberSample.begin(), chamberSample.end(), rng );
+                }
+
+                entityPos{chambers[chamberSample[0]][0], chambers[chamberSample[0]][1]};
+
+                for(auto posMod : randomDragonPos){
+                    dragonPosition = make_tuple<entityPos.getX() + posMod[0][0], 
+                                                entityPos.getY() + posMod[0][1]>;
+                    if(find(chambers[chamberSample[0]].begin(), chambers[chamberSample[0]].end(), dragonPosition) != chambers[chamberSample[0]].end()){
+                        newDragonPos.push_back(dragonPosition);
+                    }
+                }
+            } while {!newDragonPos.empty()};
+        }
+
+        Item tempGold = Item{goldSample[goldDistribution[0]]};
+        tempGold.setCoords{entityPos};
+
+        std::shuffle(newDragonPos.begin(), newDragonPos.end(), rng);
+        enemies.emplace_back(Enemy{Position{newDragonPos[0][0], newDragonPos[0][1]}, Race::Dragon, 150, 20, 20});
+
+        maxEnemies--;
+
+        items.emplace_back(tempGold)
+        chambers[chamberSample[0]][0].erase(chambers.start());
+
+	}
+    
 }
+
 void Board::tick(){
 
 }
@@ -165,11 +279,14 @@ void Board::display(){
 
 
 void Board::readLevel(){
+
     string file = "./levels/level" + to_string(currentLevel) + ".txt";
     ifstream levelFile(file);
 
     char ch;
     numChambers = levelFile.get(ch) - '0';
+    chambers.resize(numChambers);
+
     string line;
     int row = 0;
 

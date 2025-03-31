@@ -23,6 +23,7 @@ export enum class Race {
 export class LivingEntity: public Entity, public Observer, public Subject {
     protected:
         Race race;
+        const int maxhp;
         int hp, atk, def;
         Currency money;
         std::vector<Entity*> neighbours;
@@ -41,4 +42,5 @@ export class LivingEntity: public Entity, public Observer, public Subject {
         // direction to displacement's direction.
         void move(Position displacement);
         virtual void attack() = 0;
+        friend class Passive;
 };

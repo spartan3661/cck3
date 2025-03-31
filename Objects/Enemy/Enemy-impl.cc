@@ -29,7 +29,9 @@ void Enemy::onDeath() {
     notifyObservers("drop_gold");
 }
 
-
+void Enemy::giveCompass(){
+    compassHolder = true;
+}
 // Observer Methods
 void Enemy::notify(Subject& whoNotified, string action) {
     try {
