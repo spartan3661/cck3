@@ -30,6 +30,5 @@ void BarrierSuit::pickupItem(LivingEntity& to) {
         cerr << e.what() << endl;
     }
 }
-BarrierSuit::BarrierSuit(Position pos, string name) : Item{pos, name, false} {}
 
 BarrierSuit::~BarrierSuit() {}

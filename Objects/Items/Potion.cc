@@ -15,5 +15,4 @@ export class Potion : public Item {
         void pickupItem(LivingEntity& to);
         void useItem() override;
         void useItem(Player& plr, bool withCharge = false); // applies effect to player but not added to inventory
-
 };

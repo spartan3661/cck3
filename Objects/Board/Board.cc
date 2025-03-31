@@ -27,6 +27,7 @@ export class Board{
     std::vector<int> enemyDistribution;
     std::vector<Enemy*> enemySample;
     std::vector<Enemy*> enemies;
+    std::vector<char> enemySymbols;
 
     std::vector<Potion> potionSample;
     std::vector<int> goldDistribution;
@@ -43,6 +44,7 @@ export class Board{
 
     public:
         Board();
+        //~Board();
         void init(Race r);
         void clearBoard();
         int spawnPlayer(std::default_random_engine& rng, Race r);
@@ -59,6 +61,4 @@ export class Board{
         void spawnPotion(std::default_random_engine& rng);
         void spawnGold(std::default_random_engine& rng);
         
-
-
 };

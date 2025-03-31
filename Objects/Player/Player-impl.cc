@@ -18,7 +18,7 @@ Player::Player(
     int def,
     Passive *passive
 ):
-    LivingEntity{pos, race, hp, atk, def}
+    LivingEntity{pos, race, hp, atk, def, passive}, score{0}
 {}
 
 void Player::attack() {
@@ -56,6 +56,8 @@ int Player::getDef() const {
     if (effects) { effect_total = effects->getEffect(type); }
     return effect_total + def;
 }
+
+int Player::getScore() const { return score; }
 
 
 void Player::addEffect(StatusEffect *effect) {
@@ -107,6 +109,8 @@ void Player::decrementEffects() {
         }
     }
 }
+
+void Player::setScore(int s) { score = s; }
 
 
 // Observer Methods

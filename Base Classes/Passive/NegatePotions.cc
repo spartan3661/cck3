@@ -1,11 +1,11 @@
 export module negatePotion;
+import <string>;
 import passive;
-import livingEntity;
 import statusEffect;
 
-class NegatePotions : public Passive{
+export class NegatePotions : public Passive{
     public:
-        //void NegatePotions();
+        NegatePotions();
         void passiveEffect() override;
-        void passiveEffect(LivingEntity& to);
+        void passiveEffect(StatusEffect* e);
 };

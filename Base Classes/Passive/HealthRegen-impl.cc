@@ -1,13 +1,12 @@
-module healthStealing;
+module healthRegen;
+import <string>;
 import passive;
 import livingEntity;
 
-HealthRegen::HealthRegen(int rate) : rate{rate}{}
-void HealthRegen::passiveEffect() override {}
+HealthRegen::HealthRegen(int rate): Passive{"regen"}, rate{rate}{}
+
+void HealthRegen::passiveEffect() {}
+
 void HealthRegen::passiveEffect(LivingEntity& to) {
-    if (to.health += rate > to.maxHp){
-        to.health = to.maxHp;
-    } else{
-        to.health += rate;
-    }
+    to.addHp(rate);
 }

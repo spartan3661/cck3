@@ -1,22 +1,34 @@
 module multiply;
+import <iostream>;
+import <string>;
+import <memory>;
+import <cmath>;
 import passive;
 import livingEntity;
-import <memory>;
+import player;
+import currency;
 
-Multiply::Multiply(float multiplier) : type{"gold"}, multiplier{multiplier} {}
-void Multiply::passiveEffect() override {}
+using namespace std;
+
+Multiply::Multiply(string type, float multiplier): Passive{type}, multiplier{multiplier} {}
+
+void Multiply::passiveEffect() {}
+
 void Multiply::passiveEffect(LivingEntity& to, Currency pickup) {
-    if (type = "gold"){
-        tempCurrency = Currency{pickup};
-        int totalSilver = tempCurrency.getGold(); * 100 + tempCurrency.getSilver();;
+    if (type == "gold"){
+        int totalSilver = pickup.getGold() * 100 + pickup.getSilver();
         int newAmount = static_cast<int>(round(totalSilver * multiplier));
         int newGold = newAmount / 100;
         int newSilver = newAmount % 100;
-        to.money = Currency{newGold, newSilver};
+        to.addMoney(Currency{newGold, newSilver});
 
-    }
-    if (type = "score"){
-        int newScore = static_cast<int>(round(to.score * multiplier));
-        to.score = newScore;
+    } else if (type == "score"){
+        try {
+            Player& plr = dynamic_cast<Player&>(to);
+            int newScore = static_cast<int>(round(plr.getScore() * multiplier));
+            plr.setScore(newScore);
+        } catch(bad_cast &e) {
+            cerr << e.what() << endl;
+        }
     }
 }

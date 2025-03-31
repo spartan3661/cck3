@@ -17,12 +17,18 @@ import healthEffect;
 import atkEffect;
 import defEffect;
 
+import board;
+import textDisplay;
+
 using namespace std;
 
 int main() {
+    Board b;
+    b.init(Race::HUMAN);
+    b.display();
 
     // TEST CURRENCY AND POSITION
-
+    /*
     Currency c{5, 20};
     Position p{10, 10, Direction::NO};
 
@@ -120,4 +126,5 @@ int main() {
     cout << plr.getAtk() << endl;
     cout << plr.getDef() << endl;
     cout << plr.getMoney() << endl;
+    */
 }

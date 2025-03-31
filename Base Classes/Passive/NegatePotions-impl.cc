@@ -1,13 +1,14 @@
-module healthStealing;
+module negatePotion;
 import passive;
 import livingEntity;
-import potion;
-import statisEffect;
+import statusEffect;
 
-//void NegatePotions();
-void NegatePotions::passiveEffect() override{}
-void NegatePotions::passiveEffect(Potion& potion){
-    if (potion.effect->negative){
-        potion.effect->negative = false;
+NegatePotions::NegatePotions(): Passive{"negatePotions"} {};
+
+void NegatePotions::passiveEffect() {}
+
+void NegatePotions::passiveEffect(StatusEffect* e){
+    if (e->isNegative()){
+        e->setNegative(false);
     }
 }

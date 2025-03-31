@@ -35,6 +35,14 @@ SOURCES = Objects/Currency/Currency.cc \
 		  Objects/PotionEffects/AtkEffect-impl.cc \
 		  Objects/PotionEffects/DefEffect.cc \
 		  Objects/PotionEffects/DefEffect-impl.cc \
+		  Base\ Classes/Passive/HealthRegen.cc \
+		  Base\ Classes/Passive/HealthRegen-impl.cc \
+		  Base\ Classes/Passive/Multiply.cc \
+		  Base\ Classes/Passive/Multiply-impl.cc \
+		  Base\ Classes/Passive/NegatePotions.cc \
+		  Base\ Classes/Passive/NegatePotions-impl.cc \
+		  Base\ Classes/Passive/Stealing.cc \
+		  Base\ Classes/Passive/Stealing-impl.cc \
 		  Objects/Enemy/Merchant.cc \
 		  Objects/Enemy/Merchant-impl.cc \
 		  Objects/Enemy/Dragon.cc \

@@ -5,9 +5,10 @@ import item;
 import position;
 
 Dragon::Dragon(Position pos, Item* treasure):
-    Enemy{pos, Race::DRAGON, 150, 20, 20, false, false},
+    Enemy{pos, Race::DRAGON, 150, 20, 20, nullptr, false, false},
     treasure{treasure}
 {}
+
 void Dragon::onDeath() {
 
 }

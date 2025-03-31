@@ -6,10 +6,10 @@ import <iostream>;
 
 using namespace std;
 
-TextDisplay::TextDisplay(const std::vector<std::vector<char>>& display) : display(display) {}
+TextDisplay::TextDisplay(std::vector<std::vector<char>>* display) : display{display} {}
 
 void TextDisplay::printBoard(const Player* plr, string boardState) const {
-    for (const auto& row : display) {
+    for (const auto& row : *display) {
         for (char c : row) {
             cout << c;
         }
@@ -18,7 +18,7 @@ void TextDisplay::printBoard(const Player* plr, string boardState) const {
 }
 
 std::ostream& operator<<(std::ostream& os, const TextDisplay& td){
-    for (const auto& row : td.display) {
+    for (const auto& row : *td.display) {
         for (char c : row) {
             os << c;
         }

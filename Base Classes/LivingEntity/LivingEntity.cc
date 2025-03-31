@@ -25,12 +25,12 @@ export class LivingEntity: public Entity, public Observer, public Subject {
         Race race;
         const int maxhp;
         int hp, atk, def;
+        Passive *passive;
         Currency money;
         std::vector<Entity*> neighbours;
-        Passive *passive;
 
     public:
-        LivingEntity(Position pos, Race race, int hp, int atk, int def);
+        LivingEntity(Position pos, Race race, int hp, int atk, int def, Passive *passive);
 
         // getters
         int getMaxHp() const;
@@ -44,6 +44,8 @@ export class LivingEntity: public Entity, public Observer, public Subject {
         // setter
         void addMoney(Currency amount);
         void subMoney(Currency amount);
+        void addHp(int amount);
+        void subHp(int amount);
 
         // adds displacement to current position and changes
         // direction to displacement's direction.

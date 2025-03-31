@@ -1,11 +1,13 @@
 export module multiply;
+import <string>;
 import passive;
 import livingEntity;
+import currency;
 
-class Multiply : public Passive{
+export class Multiply : public Passive{
     float multiplier;
     public:
-        //void Multiply();
+        Multiply(std::string type, float multiplier);
         void passiveEffect() override;
-        void passiveEffect(LivingEntity& to);
+        void passiveEffect(LivingEntity& to, Currency pickup);
 };

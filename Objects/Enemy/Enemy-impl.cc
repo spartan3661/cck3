@@ -7,6 +7,7 @@ import <memory>;
 import position;
 import currency;
 import livingEntity;
+import passive;
 
 using namespace std;
 
@@ -16,9 +17,10 @@ Enemy::Enemy(
     int hp,
     int atk,
     int def,
+    Passive *passive,
     bool compassHolder,
     bool isHostile
-): LivingEntity{pos, race, hp, atk, def}, compassHolder{compassHolder}, isHostile{isHostile} {
+): LivingEntity{pos, race, hp, atk, def, passive}, compassHolder{compassHolder}, isHostile{isHostile} {
     money = Currency{1, 0};
 }
 
@@ -59,6 +61,10 @@ bool Enemy::getCompassHolder() const {
 bool Enemy::getIsHostile() const {
     return isHostile;
 }
+Passive* Enemy::getPassive() const {
+    return passive;
+}
+
 string Enemy::getName() { return "Enemy"; }
 
 Enemy::~Enemy() {}

@@ -19,7 +19,7 @@ import potion;
 using namespace std;
 
 Merchant::Merchant(Position pos):
-    Enemy{pos, Race::MERCHANT, 30, 70, 5, false, false}
+    Enemy{pos, Race::MERCHANT, 30, 70, 5, nullptr, false, false}
 {
     shop_items = {
         new Potion{Position{0, 0}, "Restore health (RH)", Currency{10, 0}, new HealthEffect{false}},

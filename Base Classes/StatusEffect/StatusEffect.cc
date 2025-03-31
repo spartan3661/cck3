@@ -20,4 +20,5 @@ export class StatusEffect {
         
         // setter
         void setNext(StatusEffect *new_p);
+        void setNegative(bool val);
 };

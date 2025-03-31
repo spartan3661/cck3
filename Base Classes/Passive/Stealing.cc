@@ -1,12 +1,13 @@
 export module stealing;
+import <string>;
 import passive;
 import livingEntity;
 
 
-class Stealing : public Passive{
+export class Stealing: public Passive{
     int amount;
     public:
-        void Stealing(int amount);
+        Stealing(std::string type, int amount);
         void passiveEffect() override;
         void passiveEffect(LivingEntity& to, LivingEntity& from);
 };

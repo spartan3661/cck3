@@ -4,6 +4,7 @@ import entity;
 import subject_observer;
 import currency;
 import position;
+import passive;
 
 using namespace std;
 
@@ -12,9 +13,10 @@ LivingEntity::LivingEntity(
     Race race,
     int hp,
     int atk,
-    int def
+    int def,
+    Passive *passive
 ): 
-    Entity{pos}, race{race}, maxhp{hp}, hp{hp}, atk{atk}, def{def}, money{0, 0}
+    Entity{pos}, race{race}, maxhp{hp}, hp{hp}, atk{atk}, def{def}, passive{passive}, money{0, 0}
 {
     passive = nullptr;
 }
@@ -35,6 +37,18 @@ Race LivingEntity::getRace(){
 
 void LivingEntity::addMoney(Currency amount) { money += amount; }
 void LivingEntity::subMoney(Currency amount) { money -= amount; }
+void LivingEntity::addHp(int amount) {
+    hp += amount;
+    if (hp > maxhp){
+        hp = maxhp;
+    }
+}
+void LivingEntity::subHp(int amount) {
+    hp -= amount;
+    if (hp < 0){
+        hp = 0;
+    }
+}
 
 void LivingEntity::move(Position displacement) {
     coords += displacement;

@@ -22,6 +22,8 @@ StatusEffect* StatusEffect::getNext() const { return p; }
 
 int StatusEffect::getDuration() const { return duration; }
 
+void StatusEffect::setNegative(bool val) { negative = val; }
+
 
 // setter
 
