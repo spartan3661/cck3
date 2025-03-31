@@ -34,6 +34,7 @@ Race LivingEntity::getRace(){
 }
 
 void LivingEntity::addMoney(Currency amount) { money += amount; }
+void LivingEntity::subMoney(Currency amount) { money -= amount; }
 
 void LivingEntity::move(Position displacement) {
     coords += displacement;

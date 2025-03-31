@@ -35,6 +35,10 @@ SOURCES = Objects/Currency/Currency.cc \
 		  Objects/PotionEffects/AtkEffect-impl.cc \
 		  Objects/PotionEffects/DefEffect.cc \
 		  Objects/PotionEffects/DefEffect-impl.cc \
+		  Objects/Enemy/Merchant.cc \
+		  Objects/Enemy/Merchant-impl.cc \
+		  Objects/Enemy/Dragon.cc \
+		  Objects/Enemy/Dragon-impl.cc \
 		  Objects/TextDisplay/TextDisplay.cc \
 		  Objects/TextDisplay/TextDisplay-impl.cc \
 		  Objects/Board/Board.cc \

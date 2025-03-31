@@ -43,6 +43,7 @@ export class LivingEntity: public Entity, public Observer, public Subject {
 
         // setter
         void addMoney(Currency amount);
+        void subMoney(Currency amount);
 
         // adds displacement to current position and changes
         // direction to displacement's direction.

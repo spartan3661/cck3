@@ -4,13 +4,16 @@ import livingEntity;
 import position;
 
 export class Enemy: public LivingEntity {
-    bool compassHolder;
-    bool isHostile;
+    protected:
+        bool compassHolder;
+        bool isHostile;
     
     public:
         Enemy(Position pos, Race race, int hp, int atk, int def, bool compassHolder = false, bool isHostile = true);
         
         void attack() override;
+
+        virtual void onDeath(); // params: Board& b
 
         void onDeath(); // params: Board& b
         void giveCompass();

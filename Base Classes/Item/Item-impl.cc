@@ -1,31 +1,24 @@
 module item;
+import <iostream>;
 import <string>;
-import position;
+import <memory>;
+import entity;
 import livingEntity;
+import currency;
+import position;
 //import board;
 
 using namespace std;
 
-Item::Item(Position pos, string name, bool pickupable): Entity{pos}, name{name}, pickupable{pickupable} {}
+Item::Item(Position pos, string name, bool pickupable, Currency price): Entity{pos}, name{name}, pickupable{pickupable}, price{price} {}
 
 string Item::getName() const { return name; }
 
+Currency Item::getPrice() const { return price; }
+
 bool Item::canPickup() const { return pickupable; }
 
-void Item::pickupItem(LivingEntity& to, bool useOnPickup) {
-    if (!pickupable) return;
-
-    //DYNAMIC CAST THIS PLEASE!!!!
-    //plr.inventory.emplace_back(this);
-
-    /*
-    for (auto item in b.items) {
-        if (item == this) {
-            auto index = find(b.items.begin(), b.items.end(), item);
-            b.items.erase(index);
-        }
-    }*/
-}
+void Item::pickupItem(LivingEntity& to) {}
 
 void Item::useItem() {}
 
